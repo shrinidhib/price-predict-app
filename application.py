@@ -12,5 +12,8 @@ def index():
     fuel_type=car['fuel_type'].unique()
     return render_template('index.html', companies=companies, car_models=car_models, years=year, fuel_types=fuel_type)
 
+@app.route('predict', methods=['POST'])
+
+
 if __name__=="__main__":
     app.run(debug=True)

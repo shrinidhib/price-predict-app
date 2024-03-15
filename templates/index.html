@@ -56,10 +56,16 @@
                         <input type="text" id="kilo_driven" name="kilo_driven" />
                     </div>
                     <div class="col-10 form-group" style="text-align: center;">
-                      <button class="form-control btn btn-primary" onclick="">Predict Price</button>
+                      <button class="form-control btn btn-primary" onclick="send_data">Predict Price</button>
 
                     </div>
                   </form>
+                  <br>
+                  <div class="row">
+                    <div class="col-12" style="text-align: center;">
+                      <h3><span id="prediction"></span></h3>
+                    </div>
+                  </div>
                 </div>
 
             </div>
@@ -85,6 +91,33 @@
               {% endfor %}
             }
           {% endfor %}
+      }
+
+      function form_handler(e){
+        e.preventDefault()
+      }
+
+      function send_data(){
+        document.querySelector('form').addEventListener('submit', form_handler)
+
+        var fd=new FormData(document.querySelector('form'));
+
+        var xhr=new XMLHttpRequest();
+
+        xhr.open('POST', '/predict', true)
+
+        document.getElementById('prediction').innerHTML='Predicting...'
+
+        xhr.onreadystatechange=function(){
+          if (xhr.readyState==XMLHttpRequest.DONE){
+            document.getElementById('prediction').innerHTML="Prediction: " + xhr.responseText
+          }
+        }
+
+        xhr.onload=function(){};
+
+        xhr.send(fd)
+
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
